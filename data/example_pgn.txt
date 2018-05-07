@@ -1,0 +1,53 @@
+[Event "3. Sat Djenovici Dec IM"]
+[Site "Djenovici MNE"]
+[Date "2017.12.23"]
+[Round "7.3"]
+[White "Nikcevic, Nebojsa"]
+[Black "Gleizerov, Evgeny"]
+[Result "0-1"]
+[WhiteElo "2434"]
+[BlackElo "2490"]
+[ECO "A85"]
+[EventDate "2017.12.16"]
+
+1.d4 e6 2.Nf3 f5 3.c4 Nf6 4.Nc3 Bb4 5.Qb3 a5 6.a3 a4 7.Qc2 Bxc3+ 8.bxc3 b6
+9.Bf4 Bb7 10.e3 O-O 11.Be2 Ne4 12.h4 d6 13.c5 bxc5 14.Ng5 Nxg5 15.Bxg5 Qd7
+16.O-O Na6 17.Bf4 Be4 18.Qd2 cxd4 19.exd4 Nb8 20.f3 Bb7 21.Rfe1 Ba6 22.c4
+Nc6 23.d5 Nd8 24.Rab1 e5 25.Be3 Nf7 26.Bf2 f4 27.Rb4 e4 28.Qxf4 exf3 29.
+Qxf3 Ne5 30.Qg3 Rae8 31.c5 Bxe2 32.Rxe2 Nf3+ 33.Qxf3 Rxf3 34.c6 Rxe2 35.
+cxd7 Rf8 36.Bg3 Rd8 37.Rxa4 Rxd7 38.Ra8+ Kf7 39.Bf4 Re4 0-1
+
+[Event "Belt and Road Hainan Open"]
+[Site "Sanya City CHN"]
+[Date "2017.12.23"]
+[Round "6.3"]
+[White "Batchuluun, Tsegmed"]
+[Black "Zhao, Zong-Yuan"]
+[Result "1/2-1/2"]
+[WhiteElo "2568"]
+[BlackElo "2543"]
+[ECO "A90"]
+[EventDate "2017.12.17"]
+
+1.d4 f5 2.g3 Nf6 3.Bg2 e6 4.c4 d5 5.Nf3 Bd6 6.O-O O-O 7.Nc3 c6 8.Qc2 Bd7
+9.Rb1 Be8 10.b4 a6 11.a4 b5 12.c5 Bc7 13.Ra1 Nbd7 14.axb5 axb5 15.Bf4 Bxf4
+16.gxf4 Bh5 17.Rxa8 Qxa8 18.Qb2 Bxf3 19.Bxf3 Ne4 20.e3 Nxc3 21.Qxc3 Qb7
+22.Ra1 Ra8 23.Ra3 Nb8 24.Bd1 Rxa3 1/2-1/2
+
+[Event "Doroshkevich Amateur Open"]
+[Site "Sochi RUS"]
+[Date "2017.12.23"]
+[Round "3.15"]
+[White "Ustinov, Alexey"]
+[Black "Lagashin, Pavel"]
+[Result "0-1"]
+[WhiteElo "2285"]
+[BlackElo "2148"]
+[ECO "A86"]
+[EventDate "2017.12.21"]
+
+1.d4 f5 2.c4 Nf6 3.g3 g6 4.Nh3 Bg7 5.Nf4 d6 6.d5 c6 7.Bg2 O-O 8.h4 Ne4 9.
+Nd2 Qb6 10.Nxe4 fxe4 11.Qb3 Bf5 12.O-O Nd7 13.Be3 Qxb3 14.axb3 Bxb2 15.Ra2
+Be5 16.Ne6 Rfc8 17.Ng5 cxd5 18.cxd5 Nf6 19.Rd1 a6 20.Bd4 Bxd4 21.Rxd4 Rc1+
+22.Kh2 Ng4+ 23.Kh3 Nxf2+ 24.Kh2 Rf8 25.Nxe4 Nxe4 26.Bxe4 Bxe4 27.Rxe4 Rf2+
+28.Kh3 h5 29.g4 Rc3+ 30.e3 Rxa2 0-1
