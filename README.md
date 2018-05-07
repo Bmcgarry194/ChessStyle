@@ -1,7 +1,8 @@
 # ChessStyle: Beyond Chess ELO
 
 Predicting chess performance based on style clustering 
-Template for types of groups for clustering
+
+Clustering players based on similar play style metrics
 
 ## Business Understanding
 An additional metric to rate professional chess players besides just straight ELO would be incredibly valuable for chess websites like chess.com, lichess.org, and others. Especially if the evaluation has the appeal of a stylistic component which amature chess players could identify with.
