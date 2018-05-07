@@ -1,4 +1,4 @@
-# ChessStyle: ## Beyond Chess ELO
+# ChessStyle: Beyond Chess ELO
 
 Predicting chess performance based on style clustering 
 Template for types of groups for clustering
