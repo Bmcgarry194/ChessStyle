@@ -1,3 +1,6 @@
+![alt text](https://raw.githubusercontent.com/username/ChessStyle/chess.png)
+
+
 # ChessStyle: Beyond Chess ELO
 
 Predicting chess performance based on style clustering 
