@@ -1,4 +1,4 @@
-![alt text](https://raw.githubusercontent.com/username/ChessStyle/black-background-black-and-white-board-game-814133.jpg)
+![alt text](https://raw.githubusercontent.com/Bmcgarry194/master/ChessStyle/black-background-black-and-white-board-game-814133.jpg)
 
 
 # ChessStyle: Beyond Chess ELO
