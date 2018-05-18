@@ -1,9 +1,6 @@
 import pandas as pd
 import pymongo
-import requests
-from bs4 import BeautifulSoup
 import time
-import json
 from collections import Counter
 
 def games_in_a_month(games_column, player, month):
