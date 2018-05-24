@@ -1,29 +1,25 @@
 
-# ChessStyle: Beyond Chess ELO
+# ChessStyle: Chess.com User Activity Prediction
 
-Predicting chess performance based on style clustering 
-
-Clustering players based on similar play style metrics
+Predicting user activity on Chess.com
 
 ![alt text](https://raw.githubusercontent.com/Bmcgarry194/ChessStyle/master/photos/chess_picture.jpg)
 
 ## Business Understanding
-An additional metric to rate professional chess players besides just straight ELO would be incredibly valuable for chess websites like chess.com, lichess.org, and others. Especially if the evaluation has the appeal of a stylistic component which amature chess players could identify with.
+With any website, understanding user behavior is paramount to maintaining a healthy and thriving online community. In social or competitive communities it is especially important to keep the number of active and engaged users as high as possible. To this end, creating a profile of players most likely to become inactive allows Chess.com to focus resources on those users which are at greatest risk of leaving the site. This information also points us in the direction of possible ways to improve the site in order to engage a wider variety of users.
 
 ## Data Understanding
-There are several different chess databases available online (chessbase,  chesstempo, FIDE, chessdb) which have almost every game played by the top 100 players in pgn format including win, loss or draw, what color played, round number, elo of both competitors and name of event. Also I can scrape wikipedia for additional information on each of the players.
+I made use of the Chess.com api in order to gather information about users. The api was fairly new, so there was no way to get a complete list of users who signed up during a particular time period using just the api. 
+First, I queried a list of all usernames in the US and filtered them based on time of sign up. Then, made additional queries to the api to find all of the games they had played as well as additional statistics and information about their profile and saved it to a mongoDB.
+
 
 ## Data Preparation
-Take the data from the chess databases and marry them to additional player info. Use the pgn to extract additional features about the games. Theses features include: opening played, number of pieces on the board at every point in the game, etc.. 
-
-Additionally I will make use of engines to develop more features like: avg centipawn loss per move, sharp vs calm positions, 
-Modeling
-Start off with a clustering algorithm (K-means) to section off players into specific categories based on features pulled from their games.
-
-For predictions I would use a linear regression or random forest to predict probability of win loss or draw using group membership and elo as features
+Manipulated the player data in pandas.
+Parsed the games column which contained all the games from each player since they signed up.
+Pulled out the number of games played after 3 months to determine whether a user was active or inactive.
+All other stats about number of games played and types of games played in the first month since sign up were also recorded in their own columns.
 
 ## Evaluation
-The model can be evaluated fairly easily by just taking more recent game data, or held out game data to predict on and see how much my predictions are off from what really happened. 
+I split the data up into a train and test group, trained the model on the training set and evaluated three different models performance on the test set. The models were random forest, logistic regression, and a gradient boosting classifier all from the sklearn module. Looking at the ROC curves of each of the models allowed me to choose the logistic regression model which was the most effective in this particular context. 
 
-## Deployment
-Most likely just a presentation outlining the different groups of chess players I found and what various characteristics they have along with predictions based on group affiliation. 
+
