@@ -20,6 +20,6 @@ Pulled out the number of games played after 3 months to determine whether a user
 All other stats about number of games played and types of games played in the first month since sign up were also recorded in their own columns.
 
 ## Evaluation
-I split the data up into a train and test group, trained the model on the training set and evaluated three different models performance on the test set. The models were random forest, logistic regression, and a gradient boosting classifier all from the sklearn module. Looking at the ROC curves of each of the models allowed me to choose the logistic regression model which was the most effective in this particular context. 
+The data was split up into a train and test group, and trained three different models on the training set and evaluated performance on the test set. The models were random forest, logistic regression, and a gradient boosting classifier all from the sklearn module. Looking at the ROC curves of each of the models allowed me to choose the logistic regression model which was the most effective in this particular context. 
 
 
