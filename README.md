@@ -3,6 +3,8 @@
 
 Predicting user activity on Chess.com
 
+Presentation at Galvanize capstone showcase: https://youtu.be/UCAHfOv-64Q
+
 ![alt text](https://raw.githubusercontent.com/Bmcgarry194/ChessStyle/master/photos/chess_picture.jpg)
 
 ## Business Understanding
