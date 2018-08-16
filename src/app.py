@@ -10,7 +10,7 @@ import json
 
 app = dash.Dash('Chess Stats')
 
-eco_names = ps.eco_labels('eco_names.json')
+eco_names = ps.eco_labels('../data/eco_names.json')
 
 app.layout = html.Div([
     html.H1('Chess Analysis'),
