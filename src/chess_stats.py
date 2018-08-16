@@ -1,10 +1,10 @@
 import pandas as pd
 import json
-import regex as re
 import random
 import datetime
 import requests
 import numpy as np
+import re
 
 def get_monthly_archives(username):
     '''Returns a list of months in which the user played a game'''
@@ -93,7 +93,7 @@ def game_stats_df(username):
                        'eco': eco,
                        'game_length':game_length})
     
-#     Create three columns in the data frame indicating a win, draw, or loss with a True or False
+#Create three columns in the data frame indicating a win, draw, or loss with a True or False
     df['win'] = df['player_result'] == 'win'
 
     draw = {'agreed', 'repetition', 'stalemate',
@@ -107,3 +107,9 @@ def game_stats_df(username):
     df['lose'] = df['player_result'].isin(lose)
     
     return df
+
+#open dict of eco labels and names
+def eco_labels(filepath):
+    with open(filepath) as infile:
+        eco_names = json.load(infile)
+    return eco_names
