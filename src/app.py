@@ -10,13 +10,15 @@ import json
 
 app = dash.Dash('Chess Stats')
 
+eco_names = ps.eco_labels('../data/eco_names.json')
+
 app.layout = html.Div([
     html.H1('Chess Analysis'),
     dcc.Input(
         id='input-box',
         placeholder='Enter player name...',
         type='text',
-        value=''
+        value='cesdaycart'
     ),
     html.Button('Submit', id='button'),
 
@@ -32,8 +34,14 @@ app.layout = html.Div([
         dcc.Graph(id='elo_graph')
     ], style={'display': 'inline-block', 'width': '45%'}),
 
+    html.H1('Opening Frequency per Week'),
+
+    html.Div([
+        dcc.Graph(id='opening_graph'),
+        ]),
+
     #hidden div to store player data
-    html.Div(id='player_data', style={'display': 'none'})
+    html.Div(id='player_data', style={'display': 'none'}),
 ])
 
 #gets player username from input box then makes api call to chess.com
@@ -55,17 +63,18 @@ def update_dropdown(player_data):
 @app.callback(Output('elo_graph', 'figure'),
               [Input('my-dropdown', 'value'),
                Input('player_data', 'children')])
-def update_graph(selected_dropdown_value, player_data):
-    dff = pd.read_json(player_data)
-    filtered_df = dff[(dff['rules'] == 'chess') & (dff['time_class'] == selected_dropdown_value)]
+def update_ratings_graph(time_control_options, player_data):
+    dff = pd.read_json(player_data).sort_values(by=['end_time'])
+    filtered_df = dff[(dff['rules'] == 'chess') & (dff['time_class'] == time_control_options)]
     return {'data': [go.Scatter(
                                 x=filtered_df['end_time'],
                                 y=filtered_df['player_rating'].values,
-                                text=filtered_df['eco'],
-                                mode='markers',
+                                text=filtered_df['player_color'],
+                                mode='lines+markers',
                                 marker={
                                     'size': 15,
                                     'color': filtered_df['rating_difference'],
+                                    'line': {'width': 0.5, 'color': 'white'},
                                     'colorscale': 'Viridis',
                                     'showscale': True,
                                     'opacity': 0.5,})
@@ -76,20 +85,48 @@ def update_graph(selected_dropdown_value, player_data):
 @app.callback(Output('game_count_graph', 'figure'),
               [Input('my-dropdown', 'value'),
                Input('player_data', 'children')])
-def update_graph(selected_dropdown_value, player_data):
+def update_games_graph(time_control_options, player_data):
     dff = pd.read_json(player_data)
-    filtered_df = dff[(dff['rules'] == 'chess') & (dff['time_class'] == selected_dropdown_value)]
-
-    game_amount = filtered_df.resample('D', on='end_time').size().values
+    filtered_df = dff[(dff['rules'] == 'chess') & (dff['time_class'] == time_control_options)]
+    number_of_games= filtered_df.resample('D', on='end_time').size().values
     dates =  filtered_df.resample('D', on='end_time').size().index
     return {
         'data': [{
             'x': dates,
-            'y': game_amount,
+            'y': number_of_games,
             'type': 'bar'
         }],
         'layout': {'margin': {'l': 40, 'r': 40, 't': 70, 'b': 30}}
     }
+
+@app.callback(Output('opening_graph', 'figure'),
+              [Input('my-dropdown', 'value'),
+              Input('player_data', 'children')])
+def update_openings_graph(time_control_options, player_data):
+    dff = pd.read_json(player_data)
+    dff['end_time'] = pd.to_datetime(dff['end_time'])
+    filtered_df = dff[(dff['rules'] == 'chess') & (dff['time_class'] == time_control_options)]
+    openings = filtered_df['eco'].unique()
+
+    traces = []
+    for opening in openings:
+        x = filtered_df.resample('W', on='end_time').mean().index
+        y = filtered_df[filtered_df['eco'] == opening].resample('W', on='end_time').size()
+        if y.sum() > 1:
+            traces.append(go.Scatter(
+                x=x,
+                y=y,
+                mode='lines+markers',
+                marker={'opacity': 0.5},
+                name=eco_names[opening]
+        ))
+
+    return {'data': traces,
+            'layout': go.Layout(
+                    xaxis={'title': 'Date'},
+                    yaxis={'title': 'Number of Games'},
+                    hovermode='closest'
+                )}
 
 app.css.append_css({'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'})
 
