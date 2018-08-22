@@ -5,12 +5,12 @@ import dash_html_components as html
 import plotly.graph_objs as go
 import pandas as pd
 from datetime import datetime as dt
-import chess_stats as ps
+import chess_stats as cs
 import json
 
 app = dash.Dash('Chess Stats')
 
-eco_names = ps.eco_labels('eco_names.json')
+eco_names = cs.eco_labels('../data/eco_names.json')
 
 app.layout = html.Div([
     html.H1('Chess Analysis'),
@@ -21,12 +21,14 @@ app.layout = html.Div([
         value='cesdaycart'
     ),
     html.Button('Submit', id='button'),
-
-    dcc.Dropdown(id='my-dropdown'),
-
+    
     html.Div([
-        html.H2('Games Played'),
-        dcc.Graph(id='game_count_graph')
+        dcc.Dropdown(id='my-dropdown'),
+    ], style={'width': '20%'}),
+    
+    html.Div([
+        html.H2('Piece Value Trends'),
+        dcc.Graph(id='piece_count_graph')
     ], style={'width': '45%', 'display': 'inline-block'}),
 
     html.Div([
@@ -39,6 +41,16 @@ app.layout = html.Div([
     html.Div([
         dcc.Graph(id='opening_graph'),
         ]),
+    
+    html.Div([
+        html.H2('Piece Count'),
+        dcc.Graph(id='piece_count_graph')
+    ], style={'width': '25%', 'display': 'inline-block'}),
+
+    html.Div([
+        html.H2('Games Played'),
+        dcc.Graph(id='game_count_graph')
+    ], style={'display': 'inline-block', 'width': '75%'}),
 
     #hidden div to store player data
     html.Div(id='player_data', style={'display': 'none'}),
@@ -50,7 +62,7 @@ app.layout = html.Div([
               [Input('button', 'n_clicks')],
               [State('input-box', 'value')])
 def change_player_data(n_clicks, value):
-    df = ps.game_stats_df(value)
+    df = cs.game_stats_df(value)
     return df.to_json()
 
 @app.callback(Output('my-dropdown', 'options'),
@@ -60,32 +72,41 @@ def update_dropdown(player_data):
     time_controls = dff['time_class'].unique()
     return [{'label': time_control, 'value': time_control} for time_control in time_controls]
 
+@app.callback(Output('piece_count_graph', 'figure'),
+              [Input('elo_graph', 'clickData')])
+def update_elo_graph(game_data):
+    x = list(range(len(game_data['points'][0]['customdata'])))
+    y = game_data['points'][0]['customdata']
+    return {'data': [go.Scatter(x=x,
+                                y=y,
+                                fill='tonexty')
+                    ]}
+
 @app.callback(Output('elo_graph', 'figure'),
               [Input('my-dropdown', 'value'),
                Input('player_data', 'children')])
-def update_ratings_graph(time_control_options, player_data):
+def update_elo_graph(time_control_options, player_data):
     dff = pd.read_json(player_data).sort_values(by=['end_time'])
     filtered_df = dff[(dff['rules'] == 'chess') & (dff['time_class'] == time_control_options)]
     return {'data': [go.Scatter(
                                 x=filtered_df['end_time'],
                                 y=filtered_df['player_rating'].values,
                                 text=filtered_df['player_color'],
+                                customdata=filtered_df['pieces_diff'],
                                 mode='lines+markers',
                                 marker={
-                                    'size': 15,
+                                    'size': 8,
                                     'color': filtered_df['rating_difference'],
                                     'line': {'width': 0.5, 'color': 'white'},
                                     'colorscale': 'Viridis',
-                                    'showscale': True,
-                                    'opacity': 0.5,})
-                                    ],
-        'layout': {'margin': {'l': 40, 'r': 40, 't': 70, 'b': 30}}
+                                    'showscale': True,})
+                                    ]
     }
 
 @app.callback(Output('game_count_graph', 'figure'),
               [Input('my-dropdown', 'value'),
                Input('player_data', 'children')])
-def update_games_graph(time_control_options, player_data):
+def update_game_count_graph(time_control_options, player_data):
     dff = pd.read_json(player_data)
     filtered_df = dff[(dff['rules'] == 'chess') & (dff['time_class'] == time_control_options)]
     number_of_games= filtered_df.resample('D', on='end_time').size().values
@@ -127,6 +148,8 @@ def update_openings_graph(time_control_options, player_data):
                     yaxis={'title': 'Number of Games'},
                     hovermode='closest'
                 )}
+
+
 
 app.css.append_css({'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'})
 
