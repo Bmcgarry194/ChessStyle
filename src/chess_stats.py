@@ -11,14 +11,20 @@ from io import StringIO
 def get_monthly_archives(username):
     '''Returns a list of months in which the user played a game'''
     
+    headers={'user-agent': '''ChessVision App, Author: Brian Mcgarry, GitHub: https://github.com/Bmcgarry194/chessvision, Email: bmcgarry816@gmail.com'''
+    }
+        
     try:
-        response = requests.get(f'https://api.chess.com/pub/player/{username}/games/archives')
+        response = requests.get(f'https://api.chess.com/pub/player/{username}/games/archives', headers=headers)
         return json.loads(response.content.decode('utf-8'))['archives'] 
     except:
         return []
         
 def get_player_games(username):
     '''return a list of all games played'''
+    headers={
+        'user-agent': '''ChessVision App, Author: Brian Mcgarry, GitHub: https://github.com/Bmcgarry194/chessvision, Email: bmcgarry816@gmail.com'''
+    }
     
     months = get_monthly_archives(username)
     games = []
@@ -26,7 +32,7 @@ def get_player_games(username):
         return games
     
     for month in months:
-        response = requests.get(month)
+        response = requests.get(month, headers=headers)
         for game in json.loads(response.content.decode('utf-8'))['games']:
             games.append(game)
     return games
@@ -52,6 +58,7 @@ def game_stats_df(username):
     pieces_total = []
     pieces_black = []
     pieces_white = []
+    url = []
 
     for i, game in enumerate(game_list):
         
@@ -95,6 +102,7 @@ def game_stats_df(username):
         end_time.append(pd.to_datetime(game['end_time'], unit='s'))
         time_class.append(game['time_class'])
         rules.append(game['rules'])
+        url.append(game['url'])
 
     df = pd.DataFrame({'player_username': player_username,
                        'player_color': player_color,
@@ -111,7 +119,8 @@ def game_stats_df(username):
                        'pieces_diff': pieces_diff,
                        'pieces_total': pieces_total,
                        'pieces_black': pieces_black,
-                       'pieces_white': pieces_white,})
+                       'pieces_white': pieces_white,
+                       'url': url})
     
 #Create three columns in the data frame indicating a win, draw, or loss with a True or False
     df['win'] = df['player_result'] == 'win'
