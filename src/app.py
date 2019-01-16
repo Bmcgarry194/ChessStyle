@@ -96,6 +96,12 @@ app.layout = html.Div([
         
         dcc.Graph(style={'width': '90vw', 'height': '80vh'}, id='piece_count_graph')
     ], style={'height': '90vh'}),
+    
+    #Graph of games played per week
+    html.Div([
+        html.H1('Rating Forecast'),
+        dcc.Graph(style={'width': '90vw', 'height': '80vh'}, id='forecast_graph')
+    ], style={'height': '90vh'}),
 
     #hidden div to store player data
     html.Div(id='player_data', style={'display': 'none'}),

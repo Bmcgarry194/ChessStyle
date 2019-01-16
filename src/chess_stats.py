@@ -2,6 +2,7 @@ import pandas as pd
 import json
 import requests
 import numpy as np
+from fbprophet import Prophet
 import chess
 import chess.uci
 import chess.pgn
@@ -13,13 +14,13 @@ def get_monthly_archives(username):
     
     headers={'user-agent': '''ChessVision App, Author: Brian Mcgarry, GitHub: https://github.com/Bmcgarry194/chessvision, Email: bmcgarry816@gmail.com'''
     }
-        
+
     try:
         response = requests.get(f'https://api.chess.com/pub/player/{username}/games/archives', headers=headers)
-        return json.loads(response.content.decode('utf-8'))['archives'] 
+        return json.loads(response.content.decode('utf-8'))['archives']
     except:
         return []
-        
+
 def get_player_games(username):
     '''return a list of all games played'''
     headers={
